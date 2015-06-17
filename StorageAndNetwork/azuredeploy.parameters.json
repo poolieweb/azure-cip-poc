@@ -22,5 +22,17 @@
     },
     "subnetDATAPrefix": {
       "value": "192.168.250.0/24"
-    }
+    },
+    "subnetGATEWAYPrefix": {
+      "value": "192.168.251.0/24"
+    },
+   "UISecurityGroup": {
+       "value": "UISecurityGroup"
+   },
+   "APPSecurityGroup": {
+       "value": "APPSecurityGroup"
+   },
+ 	 "DATASecurityGroup": {
+ 	        "value": "DATSSecurityGroup"
+   }
 }

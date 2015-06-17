@@ -39,30 +39,58 @@
     },
     "virtualNetworkAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/16",
+      "defaultValue": "192.168.248.0/22",
       "metadata": {
         "description": "The CIDR address space for your Virtual Network in Azure"
       }
     },
     "subnetUIPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/24",
+      "defaultValue": "192.168.248.0/24",
       "metadata": {
         "description": "This is CIDR prefix for the UI Subnet"
       }
     },
     "subnetAPPPrefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0/24",
+      "defaultValue": "192.168.249.0/24",
       "metadata": {
         "description": "This is CIDR prefix for the App Subnet"
       }
     },
     "subnetDATAPrefix": {
       "type": "string",
-      "defaultValue": "10.0.2.0/24",
+      "defaultValue": "192.168.250.0/24",
       "metadata": {
         "description": "This is CIDR prefix for the DATA Subnet"
+      }
+    },
+    "subnetGATEWAYPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.251.0/24",
+      "metadata": {
+        "description": "This is CIDR prefix for the GATEWAY Subnet"
+      }
+    },
+    "UISecurityGroup": {
+      "type": "string",
+      "defaultValue": "UI_SecurityGroup",
+      "metadata": {
+        "description": "This is name of the UISecurityGroup that will be assigned to UI Subnet"
+      }
+    },
+    "APPSecurityGroup": {
+      "type": "string",
+      "defaultValue": "APP_SecurityGroup",
+      "metadata": {
+        "description": "This is name of the APPSecurityGroup that will be assigned to APP Subnet"
+      }
+    },
+    "DATASecurityGroup": {
+      "type": "string",
+      "defaultValue": "DATA_SecurityGroup",
+      "metadata": {
+        "description": "This is name of the DATASecurityGroup that will be assigned to DATA Subnet"
       }
     }
   },
@@ -81,6 +109,11 @@
       "name": "[parameters('virtualNetworkName')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('UISecurityGroup'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('APPSecurityGroup'))]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('DATASecurityGroup'))]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -91,19 +124,274 @@
           {
             "name": "UI",
             "properties": {
-              "addressPrefix": "[parameters('subnetUIPrefix')]"
+              "addressPrefix": "[parameters('subnetUIPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('UISecurityGroup'))]"
+              }
             }
           },
           {
             "name": "APP",
             "properties": {
-              "addressPrefix": "[parameters('subnetAPPPrefix')]"
+              "addressPrefix": "[parameters('subnetAPPPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('APPSecurityGroup'))]"
+              }
             }
           },
           {
             "name": "DATA",
             "properties": {
-              "addressPrefix": "[parameters('subnetDATAPrefix')]"
+              "addressPrefix": "[parameters('subnetDATAPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('DATASecurityGroup'))]"
+              }
+            }
+          },
+          {
+            "name": "GATEWAY",
+            "properties": {
+              "addressPrefix": "[parameters('subnetGATEWAYPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('UISecurityGroup')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "Block_Outbound_Internet",
+            "properties": {
+              "description": "Block Internet",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "Internet",
+              "access": "Deny",
+              "priority": "1010",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.63.0/24",
+              "access": "Allow",
+              "priority": "1001",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.60.0/24",
+              "access": "Allow",
+              "priority": "1002",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.19.0/24",
+              "access": "Allow",
+              "priority": "1003",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.21.0/24",
+              "access": "Allow",
+              "priority": "1004",
+              "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('APPSecurityGroup')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "Block_Outbound_Internet",
+            "properties": {
+              "description": "Block Internet",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "Internet",
+              "access": "Deny",
+              "priority": "1010",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.63.0/24",
+              "access": "Allow",
+              "priority": "1001",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.60.0/24",
+              "access": "Allow",
+              "priority": "1002",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.19.0/24",
+              "access": "Allow",
+              "priority": "1003",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.21.0/24",
+              "access": "Allow",
+              "priority": "1004",
+              "direction": "Outbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('DATASecurityGroup')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "Block_Outbound_Internet",
+            "properties": {
+              "description": "Block Internet",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "Internet",
+              "access": "Deny",
+              "priority": "1010",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.63.0/24",
+              "access": "Allow",
+              "priority": "1001",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.20.60.0/24",
+              "access": "Allow",
+              "priority": "1002",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.19.0/24",
+              "access": "Allow",
+              "priority": "1003",
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Allow_Outbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "10.10.21.0/24",
+              "access": "Allow",
+              "priority": "1004",
+              "direction": "Outbound"
             }
           }
         ]
