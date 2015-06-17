@@ -24,30 +24,38 @@ https://nodejs.org/
 Make sure that npm (Node Package Manager) is installed with Node.js
 
 Test by typing
- npm
+'''
+npm
+'''
 in any console window. (You might have to restart a console window)
 
 ### Install Azure-CLI (once per machine)
 
 In the console window type
- npm install azure-cli -g
+'''
+npm install azure-cli -g
+'''
 Test by typing
- azure
+'''
+azure
+'''
 in the console window.
 
 ### Login and open target subscription
 
 Use the following commands
-
- azure login
- azure account list
- azure account set <yoursubscriptionid>
- azure config mode arm
-
+'''
+azure login
+azure account list
+azure account set <yoursubscriptionid>
+azure config mode arm
+'''
 ## Storage and Network setup
 
 Create a Azure Resource Group as a container for the solution
- azure group create -n CIPPoCResourceGroup
+'''
+azure group create -n CIPPoCResourceGroup
+'''
 
 
 ## Security Groups
