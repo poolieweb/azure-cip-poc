@@ -1,0 +1,11 @@
+{
+    "newStorageAccountName" : {
+        "value" : "CIP_STORAGE"
+    },
+    "storageAccountType": {
+        "value": "Standard_LRS"
+    },
+    "location": {
+        "value": "West Europe"
+    }
+}
