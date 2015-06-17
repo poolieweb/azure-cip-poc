@@ -23,11 +23,8 @@
     "location": {
       "type": "string",
       "allowedValues": [
-        "East US",
-        "West US",
-        "West Europe",
-        "East Asia",
-        "Southeast Asia"
+        "westeurope",
+        "northeurope"
       ],
       "metadata": {
         "description": "Location of storage account"
@@ -73,7 +70,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[parameters('newStorageAccountName')]",
-      "apiVersion": "2015-05-01",
+      "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {
         "accountType": "[parameters('storageAccountType')]"
@@ -82,7 +79,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('virtualNetworkName')]",
-      "apiVersion": "2015-05-01",
+      "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {

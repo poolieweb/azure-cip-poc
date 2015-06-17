@@ -62,7 +62,7 @@ azure group create -n CIPPoCResourceGroup -l "West Europe"
 Create the storage
 Make sure your consoles path is at the same location of this file.
 ```
-azure group deployment create -f '\storageandnetwork\azuredeploy.json' -e '\storageandnetwork\azuredeploy.parameters.json' -g CIPPoCResourceGroup -n CIPPoCDeployment
+azure group deployment create -f StorageAndNetwork/azuredeploy.json -e StorageAndNetwork/azuredeploy.parameters.json -g CIPPoCResourceGroup -n CIPPoCDeployment
 ```
 
 When the resource group has been deployed, you will see a summary of the deployment.

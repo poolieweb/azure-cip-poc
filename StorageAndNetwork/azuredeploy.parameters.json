@@ -1,12 +1,12 @@
 {
     "newStorageAccountName" : {
-        "value" : "CIP_STORAGE"
+        "value" : "cipstorage01"
     },
     "storageAccountType": {
         "value": "Standard_LRS"
     },
     "location": {
-        "value": "West Europe"
+        "value": "westeurope"
     },
     "virtualNetworkName": {
       "value": "CIP_PoC_Network"
