@@ -7,5 +7,21 @@
     },
     "location": {
         "value": "West Europe"
-    }
+    },
+
+    
+    "virtualNetworkName": {
+      "value": "CIP_PoC_Network"
+    },
+    "virtualNetworkAddressPrefix": {
+      "value": "192.168.248.0/22"
+    },
+    "subnetUIPrefix": {
+      "value": "192.168.248.0/24"
+    },
+    "subnetAPPPrefix": {
+      "value": "192.168.249.0/24"
+    },
+    "subnetDataPrefix": {
+      "value": "192.168.250.0/24"
 }

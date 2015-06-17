@@ -26,7 +26,40 @@
       "metadata": {
           "description": "Location of storage account"
       }
-    }
+    },"virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "First_ARM_VNet",
+      "metadata": {
+        "description": "This is your Virtual Network"
+      }
+    },
+    "virtualNetworkAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "The CIDR address space for your Virtual Network in Azure"
+      }
+    },
+    "subnetUIPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "This is CIDR prefix for the UI Subnet"
+      }
+    },
+    "subnetAPPPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0/24",
+      "metadata": {
+        "description": "This is CIDR prefix for the App Subnet"
+      }
+    },
+    "subnetDataPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.2.0/24",
+      "metadata": {
+        "description": "This is CIDR prefix for the DATA Subnet"
+      }
   },
   "resources": [
     {
@@ -36,6 +69,39 @@
       "location": "[parameters('location')]",
       "properties": {
         "accountType": "[parameters('storageAccountType')]"
+      }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('virtualNetworkName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('virtualNetworkAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "UI",
+            "properties": {
+              "addressPrefix": "[parameters('subnetUIPrefix')]"
+            }
+          },
+          {
+            "name": "APP",
+            "properties": {
+              "addressPrefix": "[parameters('subnetAPPPrefix')]"
+            }
+          },
+          {
+            "name": "DATA",
+            "properties": {
+              "addressPrefix": "[parameters('subnetDATAPrefix')]"
+            }
+          }
+        ]
       }
     }
   ]
