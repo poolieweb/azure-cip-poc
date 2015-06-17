@@ -8,8 +8,6 @@
     "location": {
         "value": "West Europe"
     },
-
-    
     "virtualNetworkName": {
       "value": "CIP_PoC_Network"
     },
@@ -22,6 +20,7 @@
     "subnetAPPPrefix": {
       "value": "192.168.249.0/24"
     },
-    "subnetDataPrefix": {
+    "subnetDATAPrefix": {
       "value": "192.168.250.0/24"
+    }
 }
