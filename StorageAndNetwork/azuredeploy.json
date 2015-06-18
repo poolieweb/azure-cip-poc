@@ -20,19 +20,9 @@
         "description": "Storage Account type"
       }
     },
-    "location": {
-      "type": "string",
-      "allowedValues": [
-        "westeurope",
-        "northeurope"
-      ],
-      "metadata": {
-        "description": "Location of storage account"
-      }
-    },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "First_ARM_VNet",
+      "defaultValue": "CIP_PoC_Network",
       "metadata": {
         "description": "This is your Virtual Network"
       }
@@ -97,9 +87,9 @@
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('newStorageAccountName')]", 
+      "name": "[parameters('newStorageAccountName')]",
       "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "accountType": "[parameters('storageAccountType')]"
       }
@@ -108,7 +98,7 @@
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('virtualNetworkName')]",
       "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkSecurityGroups/', parameters('UISecurityGroup'))]",
         "[concat('Microsoft.Network/networkSecurityGroups/', parameters('APPSecurityGroup'))]",
@@ -161,7 +151,7 @@
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[parameters('UISecurityGroup')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
 
@@ -303,7 +293,7 @@
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[parameters('APPSecurityGroup')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
 
@@ -441,7 +431,7 @@
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[parameters('DATASecurityGroup')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
           {
