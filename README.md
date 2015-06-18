@@ -77,11 +77,11 @@ info:    group deployment create command OK
 
 To get information about your latest deployment.
 ```
-azure group log show -l ExampleResourceGroup
+azure group log show -l CIPPoCDeployment
 ```
 To get detailed information about deployment failures.
 ```
-azure group log show -l -v ExampleResourceGroup
+azure group log show -l -v CIPPoCDeployment
 ```
 
 ## Security Groups

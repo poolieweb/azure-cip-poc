@@ -97,7 +97,7 @@
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[parameters('newStorageAccountName')]",
+      "name": "[parameters('newStorageAccountName')]", 
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]",
       "properties": {
@@ -164,6 +164,68 @@
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
+
+
+
+
+          {
+            "name": "Allow_Inbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.63.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1101",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.60.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1102",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.19.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1103",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.21.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1104",
+              "direction": "Inbound"
+            }
+          },
+
+
           {
             "name": "Block_Outbound_Internet",
             "properties": {
@@ -244,6 +306,64 @@
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
+
+
+          {
+            "name": "Allow_Inbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.63.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1101",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.60.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1102",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.19.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1103",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.21.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1104",
+              "direction": "Inbound"
+            }
+          },
           {
             "name": "Block_Outbound_Internet",
             "properties": {
@@ -324,6 +444,62 @@
       "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
+          {
+            "name": "Allow_Inbound_GMS_1",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.63.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1101",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_2",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.20.60.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1102",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_3",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.19.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1103",
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "Allow_Inbound_GMS_4",
+            "properties": {
+              "description": "Allow GMS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "*",
+              "sourceAddressPrefix": "10.10.21.0/24",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": "1104",
+              "direction": "Inbound"
+            }
+          },
           {
             "name": "Block_Outbound_Internet",
             "properties": {
