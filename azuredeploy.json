@@ -1,32 +1,151 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters":{
-    "setName": {
-     "type": "array",
-         "defaultValue": [
-         "UI",
-         "APP",
-         "DATA"
-      ]
+  "parameters": {
+    "solutionName": {
+      "type": "string",
+      "defaultValue": "CIP_PoC_Build_XX",
+      "metadata": {
+        "description": "This is solution name which will be used to generate naming strings"
+      }
+    }
   },
-  "countSetNames": {
-     "type": "int",
-     "defaultValue": 3
-  }
+  "variables": {
+    "storageAndNetworkTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/StorageAndNetwork/azuredeploy.json",
+    "availabilitySetTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/AvailabilitySets/azuredeploy.json",
+    "uivmclusterSetTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/UIVMCluster/azuredeploy.json",
+    "deploymentSettings":{
+      "storage":{
+        "name":"[concat(parameters('solutionName'),'_storage')]",
+        "type":"Standard_LRS"
+      },
+      "availabilitySet":{
+        "sets":["UI","APP","DATA"],
+        "count":3
+      },
 
+      "uiCluster":{
+        "namePrefix":"[concat(parameters('solutionName'),'_UI_)]",
+        "instances":5,
+        "availabilitySetName":"UI",
+        "adminUsername":"richard.poolie",
+        "adminPassword":"Felix2014!",
+        "image":{
+          "imagePublisher":"MicrosoftWindowsServer",
+          "imageOffer":"WindowsServer",
+          "imageSKU":"2012-R2-Datacenter",
+          "vmSize":"Standard_A1"
+        }
+
+      },
+      "virtualNetwork":{
+        "name":"[concat(parameters('solutionName'),'_vnet')]",
+        "addressPrefix":"192.168.248.0/22",
+        "subnets":{
+          "subnet1":{
+            "name":"UI_subnet",
+            "addressPrefix":"192.168.248.0/24",
+            "securityGroup":"UI_SecurityGroup"
+          },
+          "subnet2":{
+            "name":"APP_subnet",
+            "addressPrefix":"192.168.249.0/24",
+            "securityGroup":"APP_SecurityGroup"
+          },
+          "subnet3":{
+            "name":"DATA_subnet",
+            "addressPrefix":"192.168.250.0/24",
+            "securityGroup":"DATA_SecurityGroup"
+          },
+          "subnet4":{
+            "name":"GATEWAY_subnet",
+            "addressPrefix":"192.168.251.0/24"
+          }
+        }
+      }
+    }
   },
   "resources": [
     {
-      "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat('availabilitySet-', parameters('setName')[copyIndex()])]",
-      "apiVersion": "2015-05-01-preview",
-      "copy": {
-         "name": "availabilitySetCopy",
-         "count": "[parameters('countSetNames')]"
-      },
-      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-01-01",
+      "name": "StorageAndNetworkTemplatelink",
+      "type": "Microsoft.Resources/deployments",
       "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "[variables('storageAndNetworkTemplatelink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('deploymentSettings').storage.name]"
+          },
+          "storageAccountType": {
+            "value": "[variables('deploymentSettings').storage.type]"
+          },
+          "virtualNetworkName": {
+            "value": "[variables('deploymentSettings').virtualNetwork.name]"
+          },
+          "virtualNetworkAddressPrefix": {
+            "value": "[variables('deploymentSettings').virtualNetwork.addressPrefix]"
+          },
+          "subnetUIPrefix": {
+            "value": "[variables('deploymentSettings').virtualNetwork.subnets.subnet1.addressPrefix]"
+          },
+          "subnetAPPPrefix": {
+            "value": "[variables('deploymentSettings').virtualNetwork.subnets.subnet2.addressPrefix]"
+          },
+          "subnetDATAPrefix": {
+            "value": "[variables('deploymentSettings').virtualNetwork.subnets.subnet3.addressPrefix]"
+          },
+          "subnetGATEWAYPrefix": {
+            "value": "[variables('deploymentSettings').virtualNetwork.subnets.subnet4.addressPrefix]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "AvailabilitySetTemplatelink",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "[variables('uivmclusterSetTemplatelink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('deploymentSettings').storage.name]"
+          },
+          "vmNamePrefix" : {
+            "value": "[variables('deploymentSettings').uiCluster.namePrefix]"
+          },
+          "numberOfInstances" : {
+            "value": "[variables('deploymentSettings').uiCluster.instances]"
+          },
+          "availabilitySetName" : {
+            "value": "[variables('deploymentSettings').uiCluster.availabilitySetName]"
+          },
+          "adminUsername": {
+            "value": "[variables('deploymentSettings').uiCluster.adminUsername]"
+          },
+          "adminPassword": {
+            "value": "[variables('deploymentSettings').uiCluster.adminPassword]"
+          },
+          "imagePublisher": {
+            "value": "[variables('deploymentSettings').uiCluster.image.imagePublisher]"
+          },
+          "imageOffer": {
+            "value": "[variables('deploymentSettings').uiCluster.image.imageOffer]"
+          },
+          "imageSKU": {
+            "value": "[variables('deploymentSettings').uiCluster.image.imageSKU]"
+          },
+          "vmSize": {
+            "value": "[variables('deploymentSettings').uiCluster.image.vmSize]"
+          }
+        }
       }
     }
   ]
