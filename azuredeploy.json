@@ -45,22 +45,22 @@
         "addressPrefix": "192.168.248.0/22",
         "subnets": {
           "subnet1": {
-            "name": "UI_subnet",
+            "name": "UI",
             "addressPrefix": "192.168.248.0/24",
             "securityGroup": "UI_SecurityGroup"
           },
           "subnet2": {
-            "name": "APP_subnet",
+            "name": "APP",
             "addressPrefix": "192.168.249.0/24",
             "securityGroup": "APP_SecurityGroup"
           },
           "subnet3": {
-            "name": "DATA_subnet",
+            "name": "DATA",
             "addressPrefix": "192.168.250.0/24",
             "securityGroup": "DATA_SecurityGroup"
           },
           "subnet4": {
-            "name": "GATEWAY_subnet",
+            "name": "GATEWAY",
             "addressPrefix": "192.168.251.0/24"
           }
         }
