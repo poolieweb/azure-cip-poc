@@ -3,23 +3,18 @@
   "contentVersion": "1.0.0.0",
   "parameters":{
     "setName": {
-     "type": "array",
-         "defaultValue": [
-         "UI",
-         "APP",
-         "DATA"
-      ]
+     "type": "array"
   },
   "countSetNames": {
      "type": "int",
-     "defaultValue": 3
+     "defaultValue": 1
   }
 
   },
   "resources": [
     {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[concat('availabilitySet-', parameters('setName')[copyIndex()])]",
+      "name": "[parameters('setName')[copyIndex()]]",
       "apiVersion": "2015-05-01-preview",
       "copy": {
          "name": "availabilitySetCopy",

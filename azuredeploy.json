@@ -21,16 +21,16 @@
       },
       "availabilitySet": {
         "sets": [
-          "UI",
-          "APP",
-          "DATA"
+          "availabilitySet-UI",
+          "availabilitySet-APP",
+          "availabilitySet-DATA"
         ],
         "count": 3
       },
       "uiCluster": {
         "namePrefix": "[concat(parameters('solutionName'),'_UI_')]",
         "instances": 5,
-        "availabilitySetName": "UI",
+        "availabilitySetName": "availabilitySet-UI",
         "adminUsername": "richard.poole",
         "adminPassword": "Felix2014!",
         "image": {
