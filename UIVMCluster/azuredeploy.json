@@ -103,6 +103,9 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+          "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('vmNamePrefix'), copyindex(),'nic'))]"
+      ],
       "properties": {
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('availabilitySetName'))]"
