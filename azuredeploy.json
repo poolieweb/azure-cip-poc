@@ -4,7 +4,7 @@
   "parameters": {
     "solutionName": {
       "type": "string",
-      "defaultValue": "CIP_PoC_Build_XX",
+      "defaultValue": "CIPPoCBuildXX",
       "metadata": {
         "description": "This is solution name which will be used to generate naming strings"
       }
@@ -16,7 +16,7 @@
     "uivmclusterSetTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/UIVMCluster/azuredeploy.json",
     "deploymentSettings":{
       "storage":{
-        "name":"[concat(parameters('solutionName'),'_storage')]",
+        "name":"[toLower(parameters('solutionName'))]",
         "type":"Standard_LRS"
       },
       "availabilitySet":{
@@ -25,10 +25,10 @@
       },
 
       "uiCluster":{
-        "namePrefix":"[concat(parameters('solutionName'),'_UI_)]",
+        "namePrefix":"[concat(parameters('solutionName'),'_UI_')]",
         "instances":5,
         "availabilitySetName":"UI",
-        "adminUsername":"richard.poolie",
+        "adminUsername":"richard.poole",
         "adminPassword":"Felix2014!",
         "image":{
           "imagePublisher":"MicrosoftWindowsServer",
@@ -108,6 +108,9 @@
       "apiVersion": "2015-01-01",
       "name": "AvailabilitySetTemplatelink",
       "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+                "StorageAndNetworkTemplatelink"
+            ],
       "properties": {
         "mode": "incremental",
         "templateLink": {

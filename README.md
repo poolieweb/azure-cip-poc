@@ -52,17 +52,15 @@ azure account list
 azure account set <yoursubscriptionid>
 azure config mode arm
 ```
-## Storage and Network setup
 
 Create a Azure Resource Group as a container for the solution
 ```
 azure group create -n CIPPoCResourceGroup -l "West Europe"
 ```
 
-Create the storage
 Make sure your consoles path is at the same location of this file.
 ```
-azure group deployment create -f StorageAndNetwork/azuredeploy.json -e StorageAndNetwork/azuredeploy.parameters.json -g CIPPoCResourceGroup -n CIPPoCDeployment
+azure group deployment create -f azuredeploy.json -g CIPPoCResourceGroup -n CIPPoCDeployment
 ```
 
 When the resource group has been deployed, you will see a summary of the deployment.
@@ -83,15 +81,3 @@ To get detailed information about deployment failures.
 ```
 azure group log show -l -v CIPPoCDeployment
 ```
-
-## Security Groups
-
-## Availability Sets
-
-## VPN
-
-## Web Layer
-
-## Spak Layer (App)
-
-## Database
