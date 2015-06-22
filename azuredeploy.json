@@ -16,21 +16,21 @@
     "uivmclusterSetTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/UIVMCluster/azuredeploy.json",
     "deploymentSettings": {
       "storage": {
-        "name": "[concat('storage',toLower(parameters('solutionName'))]",
+        "name": "[toLower(parameters('solutionName'))]",
         "type": "Standard_LRS"
       },
       "availabilitySet": {
         "sets": [
-          "availabilitySetUI",
-          "availabilitySetAPP",
-          "availabilitySetDATA"
+          "availabilitySet-UI",
+          "availabilitySet-APP",
+          "availabilitySet-DATA"
         ],
         "count": 3
       },
       "uiCluster": {
         "namePrefix": "[concat(parameters('solutionName'),'UI')]",
         "instances": 5,
-        "availabilitySetName": "availabilitySetUI",
+        "availabilitySetName": "availabilitySet-UI",
         "adminUsername": "richard.poole",
         "adminPassword": "Felix2014!",
         "image": {
@@ -41,26 +41,26 @@
         }
       },
       "virtualNetwork": {
-        "name": "[concat('vnet',parameters('solutionName'))]",
+        "name": "[concat(parameters('solutionName'),'_vnet')]",
         "addressPrefix": "192.168.248.0/22",
         "subnets": {
           "subnet1": {
-            "name": "subnetUI",
+            "name": "UI",
             "addressPrefix": "192.168.248.0/24",
-            "securityGroup": "securityGroupUI"
+            "securityGroup": "UI_SecurityGroup"
           },
           "subnet2": {
-            "name": "subnetAPP",
+            "name": "APP",
             "addressPrefix": "192.168.249.0/24",
-            "securityGroup": "securityGroupAPP"
+            "securityGroup": "APP_SecurityGroup"
           },
           "subnet3": {
-            "name": "subnetDATA",
+            "name": "DATA",
             "addressPrefix": "192.168.250.0/24",
-            "securityGroup": "securityGroupDATA"
+            "securityGroup": "DATA_SecurityGroup"
           },
           "subnet4": {
-            "name": "subnetGATEWAY",
+            "name": "GATEWAY",
             "addressPrefix": "192.168.251.0/24"
           }
         }
