@@ -77,9 +77,7 @@
           "count": "[parameters('numberOfInstances')]"
         },
         "location": "[resourceGroup().location]",
-        "dependsOn": [
-            "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-        ],
+
         "properties": {
             "ipConfigurations": [
             {
