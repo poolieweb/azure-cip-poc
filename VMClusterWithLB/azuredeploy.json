@@ -5,7 +5,7 @@
     "loadBalancerName": {
       "type": "string",
       "defaultValue": "LB_NA"
-    }    
+    }
   },
   "resources": [
 

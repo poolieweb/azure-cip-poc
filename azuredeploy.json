@@ -170,6 +170,12 @@
           },
           "vmSize": {
             "value": "[variables('deploymentSettings').uiCluster.image.vmSize]"
+          },
+          "virtualNetworkName": {
+            "value": "[variables('deploymentSettings').virtualNetwork.name]"
+          },
+          "virtualSubNetworkName": {
+            "value": "[variables('deploymentSettings').virtualNetwork.subnets.subnet1.name]"
           }
         }
       }
