@@ -10,7 +10,7 @@
       "defaultValue": "AZUREUNKNOWN"
     },
     "numberOfInstances" : {
-      "type": "integer",
+      "type": "int",
       "defaultValue": 1
     },
     "availabilitySetName" : {
