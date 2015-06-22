@@ -16,21 +16,21 @@
     "uivmclusterSetTemplatelink": "https://raw.githubusercontent.com/poolieweb/azure-cip-poc/master/UIVMCluster/azuredeploy.json",
     "deploymentSettings": {
       "storage": {
-        "name": "[toLower(parameters('solutionName'))]",
+        "name": "[concat('storage',toLower(parameters('solutionName'))]",
         "type": "Standard_LRS"
       },
       "availabilitySet": {
         "sets": [
-          "availabilitySet-UI",
-          "availabilitySet-APP",
-          "availabilitySet-DATA"
+          "availabilitySetUI",
+          "availabilitySetAPP",
+          "availabilitySetDATA"
         ],
         "count": 3
       },
       "uiCluster": {
         "namePrefix": "[concat(parameters('solutionName'),'UI')]",
         "instances": 5,
-        "availabilitySetName": "availabilitySet-UI",
+        "availabilitySetName": "availabilitySetUI",
         "adminUsername": "richard.poole",
         "adminPassword": "Felix2014!",
         "image": {
@@ -41,26 +41,26 @@
         }
       },
       "virtualNetwork": {
-        "name": "[concat(parameters('solutionName'),'_vnet')]",
+        "name": "[concat('vnet',parameters('solutionName'))]",
         "addressPrefix": "192.168.248.0/22",
         "subnets": {
           "subnet1": {
-            "name": "UI",
+            "name": "subnetUI",
             "addressPrefix": "192.168.248.0/24",
-            "securityGroup": "UI_SecurityGroup"
+            "securityGroup": "securityGroupUI"
           },
           "subnet2": {
-            "name": "APP",
+            "name": "subnetAPP",
             "addressPrefix": "192.168.249.0/24",
-            "securityGroup": "APP_SecurityGroup"
+            "securityGroup": "securityGroupAPP"
           },
           "subnet3": {
-            "name": "DATA",
+            "name": "subnetDATA",
             "addressPrefix": "192.168.250.0/24",
-            "securityGroup": "DATA_SecurityGroup"
+            "securityGroup": "securityGroupDATA"
           },
           "subnet4": {
-            "name": "GATEWAY",
+            "name": "subnetGATEWAY",
             "addressPrefix": "192.168.251.0/24"
           }
         }
