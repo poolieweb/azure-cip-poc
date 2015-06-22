@@ -71,10 +71,6 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]"
-      ],
       "properties": {
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('availabilitySetName'))]"
