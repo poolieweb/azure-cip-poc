@@ -59,9 +59,37 @@
         "Standard_A3",
         "Standard_A4"
       ]
-    }
+    },
+    "virtualNetworkName":{
+      "type": "string"
+    },
+    "virtualSubNetworkName":{
+      "type": "string"
+    },
   },
   "resources": [
+    {
+        "apiVersion": "2015-05-01-preview",
+        "type": "Microsoft.Network/networkInterfaces",
+        "name": "[concat(parameters('vmNamePrefix'), copyindex(),'nic')]",
+        "location": "[resourceGroup().location]",
+        "dependsOn": [
+            "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+        ],
+        "properties": {
+            "ipConfigurations": [
+            {
+                "name": "ipconfig1",
+                "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                    "subnet": {
+                        "id": "[parameters('virtualSubNetworkName')]"
+                    }
+                }
+            }
+            ]
+        }
+    },
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines",
@@ -98,6 +126,14 @@
             "caching": "ReadWrite",
             "createOption": "FromImage"
           }
+
+        },
+        "networkProfile": {
+            "networkInterfaces": [
+                {
+                    "id": "[concat(parameters('vmNamePrefix'), copyindex(),'nic')]"
+                }
+            ]
         }
       }
     }
