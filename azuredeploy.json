@@ -4,7 +4,7 @@
   "parameters": {
     "solutionName": {
       "type": "string",
-      "defaultValue": "CIPPoCBuildXX",
+      "defaultValue": "CIPPoCXX",
       "metadata": {
         "description": "This is solution name which will be used to generate naming strings"
       }
@@ -28,7 +28,7 @@
         "count": 3
       },
       "uiCluster": {
-        "namePrefix": "[concat(parameters('solutionName'),'_UI_')]",
+        "namePrefix": "[concat(parameters('solutionName'),'UI')]",
         "instances": 5,
         "availabilitySetName": "availabilitySet-UI",
         "adminUsername": "richard.poole",
