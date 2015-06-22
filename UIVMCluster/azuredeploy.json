@@ -85,7 +85,7 @@
                 "properties": {
                     "privateIPAllocationMethod": "Dynamic",
                     "subnet": {
-                        "id": "[parameters('virtualSubNetworkName')]"
+                        "id": "[concat(parameters('vmNamePrefix'),'/subnets/',parameters('virtualSubNetworkName'))]""
                     }
                 }
             }
