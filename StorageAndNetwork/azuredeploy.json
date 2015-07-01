@@ -11,11 +11,6 @@
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
-      "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_ZRS"
-      ],
       "metadata": {
         "description": "Storage Account type"
       }
@@ -64,21 +59,21 @@
     },
     "UISecurityGroup": {
       "type": "string",
-      "defaultValue": "UI_SecurityGroup",
+      "defaultValue": "UI",
       "metadata": {
         "description": "This is name of the UISecurityGroup that will be assigned to UI Subnet"
       }
     },
     "APPSecurityGroup": {
       "type": "string",
-      "defaultValue": "APP_SecurityGroup",
+      "defaultValue": "APP",
       "metadata": {
         "description": "This is name of the APPSecurityGroup that will be assigned to APP Subnet"
       }
     },
     "DATASecurityGroup": {
       "type": "string",
-      "defaultValue": "DATA_SecurityGroup",
+      "defaultValue": "DATA",
       "metadata": {
         "description": "This is name of the DATASecurityGroup that will be assigned to DATA Subnet"
       }
