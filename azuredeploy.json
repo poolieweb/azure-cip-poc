@@ -21,16 +21,16 @@
       },
       "availabilitySet": {
         "sets": [
-          "availabilitySet-UI",
-          "availabilitySet-APP",
-          "availabilitySet-DATA"
+          "UI",
+          "APP",
+          "DATA"
         ],
         "count": 3
       },
       "uiCluster": {
-        "namePrefix": "[concat(parameters('solutionName'),'UI')]",
+        "namePrefix": "UI",
         "instances": 5,
-        "availabilitySetName": "availabilitySet-UI",
+        "availabilitySetName": "UI",
         "adminUsername": "richard.poole",
         "adminPassword": "Felix2014!",
         "image": {
@@ -47,17 +47,17 @@
           "subnet1": {
             "name": "UI",
             "addressPrefix": "192.168.248.0/24",
-            "securityGroup": "UI_SecurityGroup"
+            "securityGroup": "UI"
           },
           "subnet2": {
             "name": "APP",
             "addressPrefix": "192.168.249.0/24",
-            "securityGroup": "APP_SecurityGroup"
+            "securityGroup": "APP"
           },
           "subnet3": {
             "name": "DATA",
             "addressPrefix": "192.168.250.0/24",
-            "securityGroup": "DATA_SecurityGroup"
+            "securityGroup": "DATA"
           },
           "subnet4": {
             "name": "GATEWAY",
